@@ -10,7 +10,7 @@ db = SQLAlchemy(app)
 app.secret_key = 'f8wv3w2f>v9j4sEuhcNYydAGMzzZJgkGgyHE9gUqaJcCk^f*^o7fQyBT%XtTvcYM'
 
 
-class Entry(db.Model):
+class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(180))
     body = db.Column(db.String(1000))
@@ -35,14 +35,14 @@ def index():
 def display_blog_entries():
     entry_id = request.args.get('id')
     if (entry_id):
-        entry = Entry.query.get(entry_id)
+        entry = Blog.query.get(entry_id)
         return render_template('single_entry.html', title="Blog Entry", entry=entry)
 
     sort = request.args.get('sort')
     if (sort=="newest"):
-        all_entries = Entry.query.order_by(Entry.created.desc()).all()
+        all_entries = Blog.query.order_by(Blog.created.desc()).all()
     else:
-        all_entries = Entry.query.all()   
+        all_entries = Blog.query.all()   
     return render_template('all_entries.html', title="All Entries", all_entries=all_entries)
 
 @app.route('/new_entry', methods=['GET', 'POST'])
@@ -50,7 +50,7 @@ def new_entry():
     if request.method == 'POST':
         new_entry_title = request.form['title']
         new_entry_body = request.form['body']
-        new_entry = Entry(new_entry_title, new_entry_body)
+        new_entry = Blog(new_entry_title, new_entry_body)
 
         if new_entry.is_valid():
             db.session.add(new_entry)

@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>What's on your mind?</h1>
+<h1>New Blog Post.</h1>
 <form action="/new_entry" method="post">
-
-        <label for="title_field">How would you summarize your idea?</label>
+    <p>
+        <label for="title_field">Title:</label>
         <input id="title_field" name="title" type="text" value="{{ new_entry_title }}">
-
-        <label for="body_field">Tell me more:</label>
+    </p>
+    <p>
+        <label for="body_field">Details:</label>
         <textarea rows="4" cols="50" id="body_field" name="body" >{{ new_entry_body }}</textarea>
-
-    <input id="submit_button" type="submit" value="Save">
+    </p>
+    <input id="submit_button" type="submit" value="Submit">
 </form>
 {% endblock %}
