@@ -36,14 +36,14 @@ def display_blog_entries():
     entry_id = request.args.get('id')
     if (entry_id):
         entry = Blog.query.get(entry_id)
-        return render_template('single_entry.html', title="Blog Entry", entry=entry)
+        return render_template('post.html', title="Blog Entry", entry=entry)
 
     sort = request.args.get('sort')
     if (sort=="newest"):
         all_entries = Blog.query.order_by(Blog.created.desc()).all()
     else:
         all_entries = Blog.query.all()   
-    return render_template('all_entries.html', title="All Entries", all_entries=all_entries)
+    return render_template('allposts.html', title="All Entries", all_entries=all_entries)
 
 @app.route('/new_entry', methods=['GET', 'POST'])
 def new_entry():
@@ -60,13 +60,13 @@ def new_entry():
             return redirect(url)
         else:
             flash("Please check your entry for errors. Both a title and a body are required.")
-            return render_template('new_entry_form.html',
+            return render_template('new.html',
                 title="Create new blog entry",
                 new_entry_title=new_entry_title,
                 new_entry_body=new_entry_body)
 
     else: 
-        return render_template('new_entry_form.html', title="Create new blog entry")
+        return render_template('new.html', title="Create new blog entry")
 
 if __name__ == '__main__':
     app.run()
